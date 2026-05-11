@@ -5,3 +5,5 @@ langchain-text-splitters
 faiss-cpu
 pypdf
 ollama
+langchain-google-genai
+google-generativeai
