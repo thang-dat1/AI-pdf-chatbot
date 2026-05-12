@@ -248,7 +248,7 @@ if uploaded_file:                               # ktra xem co file chua, co file
 
                 for chunk in llm.stream(chat_prompt):   # STREAMING RESPONSE 
                     # AI phan hoi ra tung token nho, giong Chat GPT dang go chu 
-                    full_response += chunk
+                    full_response += chunk.content
 
                     message_placeholder.markdown(
                         full_response + "▌"            # tao hieu ung typing cursor (typing effect)
@@ -336,7 +336,7 @@ if uploaded_file:                               # ktra xem co file chua, co file
 
                 for chunk in llm.stream(prompt):      # AI generate từng token. (tao ra tung manh nho)
 
-                    full_response += chunk
+                    full_response += chunk.content
 
                     message_placeholder.markdown(
                         full_response + "▌"
