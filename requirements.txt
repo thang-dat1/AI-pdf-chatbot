@@ -1,10 +1,12 @@
 streamlit
-langchain==0.2.16
-langchain-community==0.2.16
+langchain
+langchain-community
 langchain-text-splitters
 faiss-cpu
 pypdf
-langchain-google-genai==2.0.1
 google-generativeai
-sentence-transformers
 protobuf<6
+sentence-transformers
+torch==2.2.2
+torchvision==0.17.2
+langchain-google-genai>=2.0.0
