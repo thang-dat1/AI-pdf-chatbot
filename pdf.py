@@ -113,7 +113,7 @@ def create_db(pdf_path):             # function tao vector database
     docs = splitter.split_documents(documents)  # PDF lon --> nhieu doan (chunk) nho
     
     embeddings = GoogleGenerativeAIEmbeddings(
-        model="models/text-embedding-004",
+        model="embedding-001",
         google_api_key=st.secrets["GOOGLE_API_KEY"]
     )
     # embeddings = OllamaEmbeddings(              # retrieval: truy xuat, tim thong tin lien quan nhat
