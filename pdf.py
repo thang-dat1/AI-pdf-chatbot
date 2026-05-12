@@ -32,7 +32,9 @@ from langchain_google_genai import GoogleGenerativeAIEmbeddings, ChatGoogleGener
 # ChatGoogleGenerativeAI: ket noi voi Google Gemini (LLM) de tra loi cau hoi, stream tung token nho nhu dang go chu
 # GoogleGenerativeAIEmbeddings: ket noi voi Google Gemini (LLM) de tao embedding, cung cap vector cho FAISS
 
+# =========================
 # Neu dung Ollama local --> dung OllamaEmbeddings va Ollama
+# =========================
 # from langchain_community.embeddings import OllamaEmbeddings
 # bien text thanh vector (VD "con meo" = [0.123, -0.567, ...])
 # AI se dung vector de hieu y nghia
