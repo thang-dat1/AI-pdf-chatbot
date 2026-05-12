@@ -46,7 +46,7 @@ import tempfile
 st.set_page_config(
     page_title="AI PDF Chatbot",
     page_icon="📄",
-    layout="centered"  # UI nam giua man hinh
+    layout="centered"  # UI nam giua man hinh.
 )
 
 st.title("📄 AI PDF Chatbot")
