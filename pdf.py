@@ -28,8 +28,7 @@ from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain_community.vectorstores import FAISS
 # FAISS: vector database chuyen dung de luu vector --> semantic(nghia)/similarity(giong) search (tim ND gan nghia nhat)
 
-from langchain_google_genai import GoogleGenerativeAIEmbeddings
-# from langchain_google_genai import GoogleGenerativeAIEmbeddings, ChatGoogleGenerativeAI
+from langchain_google_genai import GoogleGenerativeAIEmbeddings, ChatGoogleGenerativeAI
 # from langchain_community.llms import Ollama 
 # LLM chay local bang Ollama, ket noi Python voi model AI local
 
