@@ -134,8 +134,7 @@ def load_llm():                                 # function load model AI (LLM: L
     return ChatGoogleGenerativeAI(
         model="gemini-1.5-flash",
         google_api_key=st.secrets["GOOGLE_API_KEY"],
-        temperature=0.3,
-        client_options={"api_version": "v1"}
+        temperature=0.3
     )
     # return Ollama(
     #     model="qwen2.5:7b"                      # load Qwen model
