@@ -132,8 +132,9 @@ def create_db(pdf_path):             # function tao vector database
 @st.cache_resource
 def load_llm():                                 # function load model AI (LLM: Large Language Model)
     return ChatGoogleGenerativeAI(
-        model="models/gemini-1.5-flash",
+        model="gemini-1.5-flash",
         google_api_key=st.secrets["GOOGLE_API_KEY"],
+        client_options={"api_version": "v1"},
         temperature=0.3
     )
     # return Ollama(
