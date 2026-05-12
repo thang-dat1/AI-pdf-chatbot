@@ -7,3 +7,4 @@ pypdf
 langchain-google-genai
 google-generativeai
 protobuf<6
+sentence-transformers
