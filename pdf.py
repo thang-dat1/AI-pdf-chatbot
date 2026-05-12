@@ -28,11 +28,8 @@ from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain_community.vectorstores import FAISS
 # FAISS: vector database chuyen dung de luu vector --> semantic(nghia)/similarity(giong) search (tim ND gan nghia nhat)
 
-from langchain_community.embeddings import OllamaEmbeddings
-# bien text thanh vector (VD "con meo" = [0.123, -0.567, ...])
-# AI se dung vector de hieu y nghia
-
-from langchain_google_genai import ChatGoogleGenerativeAI
+from langchain_google_genai import GoogleGenerativeAIEmbeddings
+# from langchain_google_genai import GoogleGenerativeAIEmbeddings, ChatGoogleGenerativeAI
 # from langchain_community.llms import Ollama 
 # LLM chay local bang Ollama, ket noi Python voi model AI local
 
@@ -106,10 +103,14 @@ def create_db(pdf_path):             # function tao vector database
     )
 
     docs = splitter.split_documents(documents)  # PDF lon --> nhieu doan (chunk) nho
-
-    embeddings = OllamaEmbeddings(              # retrieval: truy xuat, tim thong tin lien quan nhat
-        model="bge-m3"
+    
+    embeddings = GoogleGenerativeAIEmbeddings(
+        model="models/embedding-001",
+        google_api_key=st.secrets["GOOGLE_API_KEY"]
     )
+    # embeddings = OllamaEmbeddings(              # retrieval: truy xuat, tim thong tin lien quan nhat
+    #     model="bge-m3"
+    # )
 
     db = FAISS.from_documents(                  # text --> embedding --> vector --> FAISS luu
         docs,
