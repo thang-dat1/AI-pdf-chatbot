@@ -134,7 +134,7 @@ def create_db(pdf_path):             # function tao vector database
 def load_llm():                                 # function load model AI (LLM: Large Language Model)
     return ChatGroq(
         api_key=st.secrets["GROQ_API_KEY"],
-        model="llama3-8b-8192",
+        model="llama-3.1-8b-instant",
         temperature=0.3
     )
     # return Ollama(
