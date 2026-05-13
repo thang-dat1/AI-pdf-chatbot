@@ -28,7 +28,8 @@ from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain_community.vectorstores import FAISS
 # FAISS: vector database chuyen dung de luu vector --> semantic(nghia)/similarity(giong) search (tim ND gan nghia nhat)
 
-from langchain_google_genai import ChatGoogleGenerativeAI
+from langchain_groq import ChatGroq
+
 from langchain_community.embeddings import HuggingFaceEmbeddings
 
 # =========================
@@ -131,10 +132,9 @@ def create_db(pdf_path):             # function tao vector database
 # =========================
 @st.cache_resource
 def load_llm():                                 # function load model AI (LLM: Large Language Model)
-    return ChatGoogleGenerativeAI(
-        model="gemini-1.5-flash",
-        google_api_key=st.secrets["GOOGLE_API_KEY"],
-        client_options={"api_version": "v1"},
+    return ChatGroq(
+        api_key=st.secrets["GROQ_API_KEY"],
+        model="llama3-8b-8192",
         temperature=0.3
     )
     # return Ollama(

@@ -8,3 +8,4 @@ google-generativeai
 protobuf<6
 sentence-transformers
 langchain-google-genai
+langchain-groq
