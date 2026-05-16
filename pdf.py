@@ -105,11 +105,16 @@ def create_db(pdf_paths):                            # function doc PDF, split, 
     all_documents = []
 
     # doc tat ca PDF
-    for pdf_path in pdf_paths:
+    for pdf in pdf_paths:
 
-        loader = PyPDFLoader(pdf_path)
+        loader = PyPDFLoader(pdf["path"])
 
         documents = loader.load()
+
+        # sua source metadata thanh ten file that.
+        for doc in documents:
+
+            doc.metadata["source"] = pdf["name"]
 
         all_documents.extend(documents)
 
@@ -182,7 +187,12 @@ if uploaded_files:                             # ktra xem co file chua, co file 
                 uploaded_file.read()
             )
 
-            pdf_paths.append(tmp_file.name)    # luu duong dan file tam vao list pdf_paths de sau nay doc PDF tu duong dan nay
+            pdf_paths.append(                  # luu duong dan file tam vao list pdf_paths.
+                {
+                    "path": tmp_file.name,
+                    "name": uploaded_file.name
+                }
+            )
 
     # =========================
     # LOAD DATABASE
@@ -296,6 +306,24 @@ if uploaded_files:                             # ktra xem co file chua, co file 
                     question,
                     k=6
                 )
+                # CITATION SOURCES
+                st.write("📚 Sources found:")
+
+                shown_sources = set()
+
+                for doc in matched_docs:
+
+                    source = doc.metadata.get("source", "Unknown")
+
+                    page = doc.metadata.get("page", "Unknown")
+
+                    source_text = f"📄 {source} - Page {page}"
+
+                    if source_text not in shown_sources:
+
+                        st.write(source_text)
+
+                        shown_sources.add(source_text)
 
                 # =========================
                 # CREATE CONTEXT
