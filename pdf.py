@@ -100,32 +100,39 @@ def is_small_talk(text):             # function ktra dang chat binh thuong hay h
 # (!) no bao Streamlit: Function nay chay 1 lan thoi, dung build lai
 # neu khong co cache: moi lan chat --> vector DB se build lai
 
-def create_db(pdf_path):             # function tao vector database  
+def create_db(pdf_paths):                            # function doc PDF, split, embedding, vector DB
 
-    loader = PyPDFLoader(pdf_path)   # 2 dong nay doc PDF (ext, metadata, page number)
-    documents = loader.load()
+    all_documents = []
 
+    # doc tat ca PDF
+    for pdf_path in pdf_paths:
+
+        loader = PyPDFLoader(pdf_path)
+
+        documents = loader.load()
+
+        all_documents.extend(documents)
+
+    # chunking
     splitter = RecursiveCharacterTextSplitter(
-        chunk_size=500,              # moi chunk 500 kitu
-        chunk_overlap=50             # overlap 50 kitu (moi doan trung nhau 50 kitu, tranh mat context)
+        chunk_size=500,
+        chunk_overlap=50
     )
 
-    docs = splitter.split_documents(documents)  # PDF lon --> nhieu doan (chunk) nho
-    
+    docs = splitter.split_documents(all_documents)
+
+    # embedding
     embeddings = HuggingFaceEmbeddings(
-    model_name="sentence-transformers/all-MiniLM-L6-v2"
+        model_name="sentence-transformers/all-MiniLM-L6-v2"
     )
-    # embeddings = OllamaEmbeddings(              # retrieval: truy xuat, tim thong tin lien quan nhat
-    #     model="bge-m3"
-    # )
 
-    db = FAISS.from_documents(                  # text --> embedding --> vector --> FAISS luu
+    # tao vector DB
+    db = FAISS.from_documents(
         docs,
         embeddings
     )
 
-    return db                                   # tra ve vector database 
-
+    return db
 
 # =========================
 # LOAD MODEL
@@ -145,38 +152,44 @@ def load_llm():                                 # function load model AI (LLM: L
 # =========================
 # UPLOAD PDF
 # =========================
-uploaded_files = st.file_uploader(
+uploaded_files = st.file_uploader(             # Nut upload file, tra ve dang list de co the upload nhieu file
     "Upload PDF",
     type="pdf",
     accept_multiple_files=True
 )
-# uploaded_file = st.file_uploader(               # Nut UPLOAD file
-#     "Upload PDF",
-#     type="pdf"
-# )
 
-if uploaded_file:                               # ktra xem co file chua, co file upload roi moi chay
+if uploaded_files:                             # ktra xem co file chua, co file upload roi moi chay
 
     # =========================
     # SAVE TEMP FILE
     # =========================
-    with tempfile.NamedTemporaryFile(           # tao file tam tren may 
-        delete=False,
-        suffix=".pdf"
-    ) as tmp_file:
 
-        tmp_file.write(
-            uploaded_file.read()                # ghi PDF vao o cung
-        )
+    st.write("📚 Files uploaded:")
 
-        pdf_path = tmp_file.name                # lay duong dan file 
+    for file in uploaded_files:
+        st.write("-", file.name)
+    
+    pdf_paths = []
+
+    for uploaded_file in uploaded_files:
+
+        with tempfile.NamedTemporaryFile(      # tao file tam de luu PDF upload, vi Streamlit chua phai file that tren o cung, ma la file tam trong RAM.
+            delete=False,
+            suffix=".pdf"
+        ) as tmp_file:
+
+            tmp_file.write(                    # ghi noi dung PDF upload vao file tam
+                uploaded_file.read()
+            )
+
+            pdf_paths.append(tmp_file.name)    # luu duong dan file tam vao list pdf_paths de sau nay doc PDF tu duong dan nay
 
     # =========================
     # LOAD DATABASE
     # =========================
     with st.spinner("📚 Đang đọc PDF..."):
 
-        db = create_db(pdf_path)               # doc PDF, split, embedding, vector DB
+        db = create_db(pdf_paths)              
 
     # =========================
     # LOAD LLM
