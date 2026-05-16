@@ -145,10 +145,15 @@ def load_llm():                                 # function load model AI (LLM: L
 # =========================
 # UPLOAD PDF
 # =========================
-uploaded_file = st.file_uploader(               # Nut UPLOAD file
+uploaded_files = st.file_uploader(
     "Upload PDF",
-    type="pdf"
+    type="pdf",
+    accept_multiple_files=True
 )
+# uploaded_file = st.file_uploader(               # Nut UPLOAD file
+#     "Upload PDF",
+#     type="pdf"
+# )
 
 if uploaded_file:                               # ktra xem co file chua, co file upload roi moi chay
 
