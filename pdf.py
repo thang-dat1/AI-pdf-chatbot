@@ -212,6 +212,16 @@ if uploaded_files:                             # ktra xem co file chua, co file 
     if "messages" not in st.session_state:     # tao memory chat
         st.session_state.messages = []         # st session_state: RAM cua chat bot
                                                # luu history, setting, trang thai
+    
+    # =========================
+    # CLEAR CHAT BUTTON
+    # =========================
+    if st.button("🗑 Clear Chat"):
+
+        st.session_state.messages = []
+
+        st.rerun()
+    
     # =========================
     # SHOW OLD CHAT
     # =========================
