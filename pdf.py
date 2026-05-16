@@ -315,7 +315,8 @@ if uploaded_files:                             # ktra xem co file chua, co file 
 
                     source = doc.metadata.get("source", "Unknown")
 
-                    page = doc.metadata.get("page", "Unknown")
+                    # page = doc.metadata.get("page", "Unknown")
+                    page = doc.metadata.get("page", 0) + 1  # page metadata bat dau tu 0, nen +1 de hien thi cho nguoi dung
 
                     source_text = f"📄 {source} - Page {page}"
 
